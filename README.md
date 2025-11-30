@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="langeria_github.png" width="75%">
+    <img src="langeria_github.png">
 </div>
 <br>
 
