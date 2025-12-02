@@ -58,9 +58,7 @@ AppDir
 ## Non-static Luanti directories or symlinks to these
 /bin/
 /games/*
-!/games/devtest/
-/games/devtest/mods/soundstuff/sounds/gitignored_sounds/*
-!/games/devtest/mods/soundstuff/sounds/gitignored_sounds/custom_sounds_here.txt
+/games/
 /cache
 /textures/*
 !/textures/base/
@@ -95,6 +93,7 @@ doc/mkdocs/docs/*.md
 doc/mkdocs/mkdocs.yml
 
 ## Build files
+build.log
 build/
 CMakeFiles
 Makefile
