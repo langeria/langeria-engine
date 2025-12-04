@@ -167,8 +167,8 @@ RenderingEngine::RenderingEngine(MyEventReceiver *receiver)
 	u16 screen_w = 0, screen_h = 0;
 	bool window_maximized = false;
 #else
-	u16 screen_w = std::max<u16>(g_settings->getU16("screen_w"), 1);
-	u16 screen_h = std::max<u16>(g_settings->getU16("screen_h"), 1);
+	u16 screen_w = std::max<u16>(g_settings->getU16("screen_w"), 960);
+	u16 screen_h = std::max<u16>(g_settings->getU16("screen_h"), 800);
 	// If I…
 	// 1. … set fullscreen = true and window_maximized = true on startup
 	// 2. … set fullscreen = false later
@@ -192,6 +192,7 @@ RenderingEngine::RenderingEngine(MyEventReceiver *receiver)
 	if (tracestream)
 		params.LoggingLevel = ELL_DEBUG;
 	params.WindowSize = core::dimension2d<u32>(screen_w, screen_h);
+	params.WindowMinSize = core::dimension2d<u32>(960, 800);
 	params.AntiAlias = fsaa;
 	params.Fullscreen = fullscreen;
 	params.WindowMaximized = window_maximized;

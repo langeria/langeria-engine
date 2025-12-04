@@ -495,6 +495,7 @@ void GUIEngine::drawOverlay(video::IVideoDriver *driver)
 void GUIEngine::drawHeader(video::IVideoDriver *driver)
 {
 	video::ITexture* texture = m_textures[TEX_LAYER_HEADER].texture;
+	core::dimension2d<u32> screensize = driver->getScreenSize();
 
 	// If no texture, draw nothing
 	if (!texture)
@@ -508,8 +509,7 @@ void GUIEngine::drawHeader(video::IVideoDriver *driver)
 		texture->getOriginalSize().Height
 	);
 	
-	// Center horizontally, place near top
-	s32 x = 20;
+	s32 x = (screensize.Width - imagesize.X) / 2;
 	s32 y = 20;
 	
 	core::rect<s32> desired_rect(x, y, x + imagesize.X, y + imagesize.Y);

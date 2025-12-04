@@ -19,11 +19,12 @@ struct SIrrlichtCreationParameters
 {
 	//! Constructs a SIrrlichtCreationParameters structure with default values.
 	SIrrlichtCreationParameters() :
-			DeviceType(EIDT_BEST),
-			DriverType(video::EDT_OPENGL),
-			WindowSize(core::dimension2d<u32>(800, 600)),
-			WindowPosition(core::position2di(-1, -1)),
-			Bits(32),
+		DeviceType(EIDT_BEST),
+		DriverType(video::EDT_OPENGL),
+		WindowSize(core::dimension2d<u32>(800, 600)),
+		WindowMinSize(core::dimension2d<u32>(0, 0)),
+		WindowPosition(core::position2di(-1, -1)),
+		Bits(32),
 			ZBufferBits(24),
 			Fullscreen(false),
 			WindowMaximized(false),
@@ -67,6 +68,9 @@ struct SIrrlichtCreationParameters
 
 	//! Size of the window or the video mode in fullscreen mode. Default: 800x600
 	core::dimension2d<u32> WindowSize;
+
+	//! Minimum window size. Default: (0, 0) means no minimum constraint.
+	core::dimension2d<u32> WindowMinSize;
 
 	//! Position of the window on-screen. Default: (-1, -1) or centered.
 	core::position2di WindowPosition;

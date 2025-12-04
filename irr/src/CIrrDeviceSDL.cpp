@@ -741,6 +741,15 @@ bool CIrrDeviceSDL::createWindowWithContext()
 		return false;
 	}
 
+	// Set minimum window size if specified
+	if (CreationParams.WindowMinSize.Width > 0 && CreationParams.WindowMinSize.Height > 0) {
+#ifdef _IRR_USE_SDL3_
+		SDL_SetWindowMinimumSize(Window, CreationParams.WindowMinSize.Width, CreationParams.WindowMinSize.Height);
+#else
+		SDL_SetWindowMinimumSize(Window, CreationParams.WindowMinSize.Width, CreationParams.WindowMinSize.Height);
+#endif
+	}
+
 	Context = SDL_GL_CreateContext(Window);
 	if (!Context) {
 		os::Printer::log("Could not create context", SDL_GetError(), ELL_WARNING);
