@@ -535,9 +535,7 @@ bool setSystemPaths()
 	if (minetest_user_path && minetest_user_path[0] != '\0') {
 		path_user = std::string(minetest_user_path);
 	} else {
-		// TODO: luanti with migration
-		path_user = std::string(getHomeOrFail()) + DIR_DELIM "."
-			+ "minetest";
+		path_user = path_share;
 	}
 
 	return true;
@@ -564,10 +562,7 @@ bool setSystemPaths()
 	if (minetest_user_path && minetest_user_path[0] != '\0') {
 		path_user = std::string(minetest_user_path);
 	} else {
-		// TODO: luanti with migration
-		path_user = std::string(getHomeOrFail())
-			+ "/Library/Application Support/"
-			+ "minetest";
+		path_user = path_share;
 	}
 	return true;
 }
@@ -582,9 +577,7 @@ bool setSystemPaths()
 	if (minetest_user_path && minetest_user_path[0] != '\0') {
 		path_user = std::string(minetest_user_path);
 	} else {
-		// TODO: luanti with migration
-		path_user  = std::string(getHomeOrFail()) + DIR_DELIM "."
-			+ "minetest";
+		path_user = path_share;
 	}
 	return true;
 }

@@ -24,7 +24,7 @@ dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
 dofile(menupath .. DIR_DELIM .. "content/pkgmgr.lua")
 dofile(basepath .. DIR_DELIM .. "uifw.lua")
 
-local main_menu = widget("main_menu", "toplevel", function(ui) 
+local main_menu = widget("main_menu", "toplevel", function(ui)
 	size		(ui, { w = 5, h = 7 })
 	position	(ui, { x = 0.5, y = 0.6 })
 	style		(ui, StyleType.BUTTON, {
@@ -57,7 +57,19 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		label = fgettext("Multiplayer"),
 
 		on_click = function(_)
-			-- Show server list
+			gamedata.singleplayer = true
+			gamedata.selected_world = menudata.worldlist:get_raw_index(1)
+
+			-- Update last game
+			local world = menudata.worldlist:get_raw_element(1)
+			local game_obj
+			if world then
+				game_obj = pkgmgr.find_by_gameid(world.gameid)
+				core.settings:set("menu_last_game", game_obj.id)
+			else
+				print("SUCK")
+			end
+			core.start()
 		end
 	})
 
@@ -107,6 +119,7 @@ local function show_menu()
 	mm_game_theme.set_dirt_bg()
 
 	local games = core.get_games()
+
 	if games and #games > 0 then
 		mm_game_theme.set_game(games[1])
 	else

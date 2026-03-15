@@ -129,24 +129,11 @@ SubgameSpec findSubgame(const std::string &id)
 	std::string share = porting::path_share;
 	std::string user = porting::path_user;
 
-	// Get games install locations
-	Strfnd search_paths(getSubgamePathEnv());
-
-	// Get all possible paths fo game
 	std::vector<GameFindPath> find_paths;
-	while (!search_paths.at_end()) {
-		std::string path = search_paths.next(PATH_DELIM);
-		path.append(DIR_DELIM).append(id);
-		find_paths.emplace_back(path, false);
-		path.append("_game");
-		find_paths.emplace_back(path, false);
-	}
 
 	std::string game_base = DIR_DELIM;
 	game_base = game_base.append("games").append(DIR_DELIM).append(id);
 	std::string game_suffixed = game_base + "_game";
-	find_paths.emplace_back(user + game_suffixed, true);
-	find_paths.emplace_back(user + game_base, true);
 	find_paths.emplace_back(share + game_suffixed, false);
 	find_paths.emplace_back(share + game_base, false);
 
@@ -193,12 +180,6 @@ std::set<std::string> getAvailableGameIds()
 	std::set<std::string> gameids;
 	std::set<std::string> gamespaths;
 	gamespaths.insert(porting::path_share + DIR_DELIM + "games");
-	gamespaths.insert(porting::path_user + DIR_DELIM + "games");
-
-	Strfnd search_paths(getSubgamePathEnv());
-
-	while (!search_paths.at_end())
-		gamespaths.insert(search_paths.next(PATH_DELIM));
 
 	for (const std::string &gamespath : gamespaths) {
 		std::vector<fs::DirListNode> dirlist = fs::GetDirListing(gamespath);
