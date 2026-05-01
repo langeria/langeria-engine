@@ -45,7 +45,7 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 	image_button(ui, { 
 		x = 0, y = 0.5, 
 		w = 5, h = 1.2, 
-		texture = "textures/button.png",
+		texture = "textures/base/button.png",
 		name = "btn_singleplayer", 
 		label = fgettext("Singleplayer"),
 
@@ -60,7 +60,7 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 	image_button(ui, {
 		x = 0, y = 1.75,
 		w = 5, h = 1.2,
-		texture = "textures/button.png",
+		texture = "textures/base/button.png",
 		name = "btn_multiplayer",
 		label = fgettext("Multiplayer"),
 
@@ -83,7 +83,7 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		x = 0, y = 3.0, 
 		w = 5, h = 1.2,
 		name = "btn_settings", 
-		texture = "textures/button.png",
+		texture = "textures/base/button.png",
 		label = fgettext("Settings"),
 
 		on_click = function(widget)
@@ -95,7 +95,7 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		x = 0, y = 4.25, 
 		w = 5, h = 1.2,
 		name = "btn_quit", 
-		texture = "textures/button.png",
+		texture = "textures/base/button.png",
 		label = fgettext("Exit"),
 
 		on_click = function(widget)
