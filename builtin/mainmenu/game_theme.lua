@@ -64,7 +64,10 @@ function mm_game_theme.set_game(gamedetails)
 
 	mm_game_theme.set_game_single("header", gamedetails)
 	mm_game_theme.set_game_single("footer", gamedetails)
-	mm_game_theme.set_dirt_bg()
+	
+	if not have_bg and not have_overlay then
+		mm_game_theme.set_dirt_bg()
+	end
 end
 
 --------------------------------------------------------------------------------

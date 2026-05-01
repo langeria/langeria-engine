@@ -127,7 +127,6 @@ local function show_menu()
 	menudata.worldlist:set_sortmode("alphabetic")
 
 	mm_game_theme.init()
-	mm_game_theme.set_dirt_bg()
 
 	local games = core.get_games()
 
