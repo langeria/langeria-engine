@@ -21,11 +21,12 @@ dofile(basepath .. "fstk" .. DIR_DELIM .. "tabview.lua")
 dofile(basepath .. "fstk" .. DIR_DELIM .. "ui.lua")
 dofile(menupath .. DIR_DELIM .. "game_theme.lua")
 dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
+dofile(menupath .. DIR_DELIM .. "dlg_confirm_exit.lua")
 dofile(menupath .. DIR_DELIM .. "content/pkgmgr.lua")
 dofile(basepath .. DIR_DELIM .. "uifw.lua")
 
 local main_menu = widget("main_menu", "toplevel", function(ui)
-	size		(ui, { w = 5, h = 7 })
+	size		(ui, { w = 5, h = 6 })
 	position	(ui, { x = 0.5, y = 0.6 })
 	style		(ui, StyleType.BUTTON, {
 		bgcolor 				= "#3366FF",
@@ -35,10 +36,16 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		border 				= "true",
 		font_size 			= "*2.0"
 	})
+	style		(ui, StyleType.IMAGE_BUTTON, {
+		textcolor 			= "#FFFFFF",
+		border 				= "true",
+		font_size 			= "*1.75"
+	})
 
-	button(ui, { 
+	image_button(ui, { 
 		x = 0, y = 0.5, 
-		w = 5, h = 2, 
+		w = 5, h = 1.2, 
+		texture = "textures/button.png",
 		name = "btn_singleplayer", 
 		label = fgettext("Singleplayer"),
 
@@ -50,10 +57,11 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		end
 	})
 
-	button(ui, { 
-		x = 0, y = 1.5, 
-		w = 5, h = 2, 
-		name = "btn_multiplayer", 
+	image_button(ui, {
+		x = 0, y = 1.75,
+		w = 5, h = 1.2,
+		texture = "textures/button.png",
+		name = "btn_multiplayer",
 		label = fgettext("Multiplayer"),
 
 		on_click = function(_)
@@ -66,17 +74,16 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 			if world then
 				game_obj = pkgmgr.find_by_gameid(world.gameid)
 				core.settings:set("menu_last_game", game_obj.id)
-			else
-				print("SUCK")
 			end
 			core.start()
 		end
-	})
+	});
 
-	button(ui, { 
-		x = 0, y = 2.5, 
-		w = 5, h = 2, 
+	image_button(ui, { 
+		x = 0, y = 3.0, 
+		w = 5, h = 1.2,
 		name = "btn_settings", 
+		texture = "textures/button.png",
 		label = fgettext("Settings"),
 
 		on_click = function(widget)
@@ -84,14 +91,18 @@ local main_menu = widget("main_menu", "toplevel", function(ui)
 		end
 	})
 
-	button(ui, { 
-		x = 0, y = 3.5, 
-		w = 5, h = 2, 
+	image_button(ui, { 
+		x = 0, y = 4.25, 
+		w = 5, h = 1.2,
 		name = "btn_quit", 
+		texture = "textures/button.png",
 		label = fgettext("Exit"),
 
-		on_click = function(_)
-			core.close()
+		on_click = function(widget)
+			local dialog = create_exit_dialog()
+			dialog:set_parent(widget)
+			widget:hide()
+			dialog:show()
 		end
 	})
 end)
@@ -179,115 +190,3 @@ function create_my_dialog()
 
 	return dlg
 end
-
--- dofile(menupath .. DIR_DELIM .. "async_event.lua")
--- dofile(menupath .. DIR_DELIM .. "content" .. DIR_DELIM .. "init.lua")
--- dofile(menupath .. DIR_DELIM .. "serverlistmgr.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_config_world.lua")
--- dofile(basepath .. "common" .. DIR_DELIM .. "settings" .. DIR_DELIM .. "init.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_create_world.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_delete_content.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_delete_world.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_register.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_rename_modpack.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_version_info.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_reinstall_mtg.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_rebind_keys.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_clients_list.lua")
--- dofile(menupath .. DIR_DELIM .. "dlg_server_list_mods.lua")
--- dofile(basepath .. "common" .. DIR_DELIM .. "menu.lua")
-
--- local tabs = {
--- 	content  = dofile(menupath .. DIR_DELIM .. "tab_content.lua"),
--- 	about = dofile(menupath .. DIR_DELIM .. "tab_about.lua"),
--- 	local_game = dofile(menupath .. DIR_DELIM .. "tab_local.lua"),
--- 	play_online = dofile(menupath .. DIR_DELIM .. "tab_online.lua")
--- }
-
--- local function main_event_handler(tabview, event)
--- 	if event == "MenuQuit" then
--- 		local show_dialog = core.settings:get_bool("enable_esc_dialog")
--- 		if not ui.childlist["mainmenu_quit_confirm"] and show_dialog then
--- 			tabview:hide()
--- 			local dlg = create_exit_dialog()
--- 			dlg:set_parent(tabview)
--- 			dlg:show()
--- 		else
--- 			core.close()
--- 		end
--- 		return true
--- 	end
--- 	return true
--- end
-
--- local function init_globals()
--- 	-- Permanent warning if on an unoptimized debug build
--- 	if core.is_debug_build() then
--- 		local set_topleft_text = core.set_topleft_text
--- 		core.set_topleft_text = function(s)
--- 			s = core.colorize("#f22", core.gettext("Debug build, expect worse performance"))
--- 			set_topleft_text(s)
--- 		end
--- 	end
-
--- 	-- Init gamedata
--- 	gamedata.worldindex = 0
-
--- 	menudata.worldlist = filterlist.create(
--- 		core.get_worlds,
--- 		compare_worlds,
--- 		-- Unique id comparison function
--- 		function(element, uid)
--- 			return element.name == uid
--- 		end,
--- 		-- Filter function
--- 		function(element, gameid)
--- 			return element.gameid == gameid
--- 		end
--- 	)
-
--- 	menudata.worldlist:add_sort_mechanism("alphabetic", sort_worlds_alphabetic)
--- 	menudata.worldlist:set_sortmode("alphabetic")
-
--- 	mm_game_theme.init()
--- 	mm_game_theme.set_engine() -- This is just a fallback.
-
--- 	-- Create main tabview
--- 	local tv_main = tabview_create("maintab", {x = MAIN_TAB_W, y = MAIN_TAB_H}, {x = 0, y = 0})
-
--- 	tv_main:set_autosave_tab(true)
--- 	tv_main:add(tabs.local_game)
--- 	tv_main:add(tabs.play_online)
--- 	tv_main:add(tabs.content)
--- 	tv_main:add(tabs.about)
-
--- 	tv_main:set_global_event_handler(main_event_handler)
--- 	tv_main:set_fixed_size(false)
-
--- 	local last_tab = core.settings:get("maintab_LAST")
--- 	if last_tab and tv_main.current_tab ~= last_tab then
--- 		tv_main:set_tab(last_tab)
--- 	end
-
--- 	tv_main:set_end_button({
--- 		icon = defaulttexturedir .. "settings_btn.png",
--- 		label = fgettext("Settings"),
--- 		name = "open_settings",
--- 		on_click = function(tabview)
--- 			local dlg = create_settings_dlg()
--- 			dlg:set_parent(tabview)
--- 			tabview:hide()
--- 			dlg:show()
--- 			return true
--- 		end,
--- 	})
-
--- 	ui.set_default("maintab")
--- 	tv_main:show()
--- 	ui.update()
-
--- 	-- synchronous, chain parents to only show one at a time
--- 	local parent = tv_main
--- 	parent = migrate_keybindings(parent)
--- end
-

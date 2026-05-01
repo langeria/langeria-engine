@@ -1,5 +1,6 @@
 StyleType = {
 	BUTTON = "button",
+	IMAGE_BUTTON = "image_button",
 	-- other style types
 }
 
@@ -62,6 +63,23 @@ function button(ui, params)
 	ui.data = ui.data .. "button[" .. params.x .. "," .. params.y .. ";" ..
 		params.w .. "," .. params.h .. ";" ..
 		params.name .. ";" .. params.label .. "]"
+
+	ui.functions[params.name] = unwrap_or(params.on_click, function() end)
+end
+
+function image_button(ui, params)
+	params.x = unwrap_or(params.x, 0)
+	params.y = unwrap_or(params.y, 0)
+	params.w = unwrap_or(params.w, 0)
+	params.h = unwrap_or(params.h, 0)
+
+	params.name = unwrap_or(params.name, "image_button")
+	params.texture = unwrap_or(params.texture, "")
+	params.label = unwrap_or(params.label, "")
+
+	ui.data = ui.data .. "image_button[" .. params.x .. "," .. params.y .. ";" ..
+		params.w .. "," .. params.h .. ";" ..
+		params.texture .. ";" .. params.name .. ";" .. params.label .. ";false;false]"
 
 	ui.functions[params.name] = unwrap_or(params.on_click, function() end)
 end
